@@ -1,0 +1,99 @@
+version: '3.3'
+
+services:
+  web:
+    container_name: rabit_web
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    tty: true
+    environment:
+      # web项目运行的端口
+      - INDEX_WEB_PORT=8601
+      # web下项目中Dev是用到的服务端地址、默认为👇🏻ORIGIN，如果开发时改动了src/Configs.ts中的SERVER_ROOT
+      # 则需要同步更新下方的ORIGIN
+      - ORIGIN=http://localhost:8600
+      # 这里应该设置为外部网络访问 server服务的请求地址
+      - SERVER_ROOT=http://rabit.example.com:8600
+    privileged: true
+    restart: always
+    networks:
+      - webnet
+    ports:
+      # 该端口号对应 INDEX_WEB_PORT, 应保持一致
+      - 8601:8601
+    volumes:
+      - ./web/main.go:/go/src/app/main.go
+      - ./web/boot.sh:/volume/common/boot.sh
+      #【SHARED DIR】
+      - ./web/view:/volume/common/view
+      # - common:/volume/common
+
+  server:
+    container_name: rabit_server
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    environment:
+      - APP_MODE=release
+      - PORT=8600
+      - MYSQL_USER=root
+      - MYSQL_DATABASE=super_rabit
+      - MYSQL_PASSWORD=xxxxxxxxx
+      - MYSQL_HOST=rabit_db
+      - MYSQL_PORT=3306
+      #最大保留的版本数量,默认仅保留 3 个,后续发布更新都会直接替换掉当前版本
+      #当数量大于1时,超出的部分会从版本列表尾部开始向上删除
+      - MAX_RESERVE_VER=5
+      #cos的永久key和密钥、推荐使用临时密钥(待完善)
+      - COS_SECRET_ID=xxxxxxxxxxxxxxxxxxxxxx
+      - COS_SECRET_KEY=xxxxxxxxxxxxxxxxxx
+      # example
+      - COS_BUCKET_NAME=super_rabit_file
+      # 00000000
+      - COS_APP_ID=0000000000
+      # ap-shanghai
+      - COS_REGION=ap-shanghai
+      #配置cos文件的CDN访问地址、配置后、web项目通过cos接口获取该配置路径
+      - COS_CDN_URL=
+      - COS_RES_DIR=/distribute/app
+      - VIEW_PATH=/volume/common/view
+    networks:
+      - webnet
+    ports:
+      - 8600:8600
+    privileged: true
+    restart: always
+    tty: true
+    volumes:
+      - ../main.go:/go/src/super_rabit/main.go
+      - ../go.mod:/go/src/super_rabit/go.mod
+      - ../pkg:/go/src/super_rabit/pkg
+      - ../internal:/go/src/super_rabit/internal
+      - ./server/boot.sh:/go/src/super_rabit/boot.sh
+      #【SHARED DIR】
+      - ./web/view:/volume/common/view
+    # volumes_from:
+    #   - web:rw
+    depends_on:
+      - db
+      - web
+  db:
+    container_name: rabit_db
+    image: mysql:8.0
+    command:
+      - --default_authentication_plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - webnet
+    environment:
+      MYSQL_ROOT_PASSWORD: xxxxxxxxx
+      MYSQL_DATABASE: super_rabit
+# volumes:
+#   common:
+networks:
+  webnet:

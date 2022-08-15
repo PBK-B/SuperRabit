@@ -1,0 +1,131 @@
+@charset "utf-8";
+
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+html,body {
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+    scroll-behavior: smooth;
+}
+input {
+    border-style: none;
+    background-color: transparent;
+    align-self: flex-start;
+}
+#root {
+    display: flex;
+    flex: 1 1 0;
+    height: 100%;
+    width: 100%;    
+}
+body{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.scrollbar-hide {
+    overflow: -moz-scrollbars-none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    width: 0 !important;
+    display:none;
+}
+.diable-text-select {
+    user-select: 'none';
+    -moz-user-select: 'none';
+    -o-user-select: 'none';
+    -webkit-user-select: 'none';
+}
+input,select,textarea {
+    font-size:100%;
+}
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+th {
+    text-align:inherit;
+}
+fieldset,img {
+    border:none;
+}
+iframe {
+    display:block;
+}
+abbr,acronym {
+    border:none;
+    font-variant:normal;
+}
+del {
+    text-decoration:line-through;
+}
+address,caption,cite,code,dfn,em,th,var {
+    font-style:normal;
+    font-weight:500;
+}
+ol,ul {
+    list-style:none;
+}
+caption,th {
+    text-align:left;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-size:100%;
+    font-weight:500;
+}
+q:before,q:after {
+    content:'';
+}
+sub,sup {
+    font-size:75%;
+    line-height:0;
+    position:relative;
+    vertical-align:baseline;
+}
+sup {
+    top:-0.5em;
+}
+sub {
+    bottom:-0.25em;
+}
+ins,a {
+    text-decoration:none;
+}
+a:focus,*:focus {
+    outline:none;
+}
+.clearfix:before,.clearfix:after {
+    content:"";
+    display:table;
+}
+.clearfix:after {
+    clear:both;
+    overflow:hidden;
+}
+.clearfix {
+    zoom:1; /* for ie6 & ie7 */
+}
+.clear {
+    clear:both;
+    display:block;
+    font-size:0;
+    height:0;
+    line-height:0;
+    overflow:hidden;
+}
+.hide {
+    display:none;
+}
+.block {
+    display:block;
+}

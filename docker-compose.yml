@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  db:
+     image: mysql:8.0
+     command:
+      - --default_authentication_plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+     restart: always
+     ports:
+      - 3306:3306
+     environment:
+       MYSQL_ROOT_PASSWORD: xxxxxxxxxxxxxxxxxx
+       MYSQL_DATABASE: super_rabit

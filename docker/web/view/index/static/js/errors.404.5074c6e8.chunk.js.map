@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/errors.404.5074c6e8.chunk.js","mappings":"+HAQA,UANiB,WAEb,OACI","sources":["pages/errors/404.tsx"],"sourcesContent":["import React from 'react'\n\nconst NotFound = () => {\n\n    return (\n        <div></div>\n    )\n}\nexport default NotFound"],"names":[],"sourceRoot":""}

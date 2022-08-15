@@ -1,0 +1,6 @@
+.text {
+    display: flex;
+    width: fit-content;
+    font-size: 1rem;
+    color: #000000;
+}
